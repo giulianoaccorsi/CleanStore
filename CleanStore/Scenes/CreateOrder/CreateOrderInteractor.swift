@@ -15,6 +15,7 @@ import UIKit
 protocol CreateOrderBusinessLogic {
     var formSection: [FormSection]{get}
     var shippingMethods: [String] {get}
+    var userInputTextField: [String] {get}
     
     func formatExpirationDate(request: CreateOrder.FormatExpirationDate.Request)
     
@@ -25,6 +26,7 @@ protocol CreateOrderDataStore {
 }
 
 class CreateOrderInteractor: CreateOrderBusinessLogic, CreateOrderDataStore {
+    
     func formatExpirationDate(request: CreateOrder.FormatExpirationDate.Request) {
         let response = CreateOrder.FormatExpirationDate.Response(date: request.date)
         presenter?.presentExpirationDate(response: response)
@@ -61,6 +63,8 @@ class CreateOrderInteractor: CreateOrderBusinessLogic, CreateOrderDataStore {
                                     FormSection.Field(text: "City", keyboardType: .normal, type: .textFieldSection),
                                     FormSection.Field(text: "State", keyboardType: .normal, type: .textFieldSection),
                                     FormSection.Field(text: "ZIP", keyboardType: .numberPad, type: .textFieldSection)])]
+    
+    var userInputTextField: [String] = []
     
     var presenter: CreateOrderPresentationLogic?
     var worker: CreateOrderWorker?

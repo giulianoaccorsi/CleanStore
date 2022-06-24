@@ -42,6 +42,7 @@ class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
     var interactor: CreateOrderBusinessLogic?
     var router: (NSObjectProtocol & CreateOrderRoutingLogic & CreateOrderDataPassing)?
     var textFieldsTags: [Int] = []
+    var myTexts = [Int: String]()
     var dateFromPresenter: String?
     
     // MARK: Object lifecycle
@@ -71,17 +72,6 @@ class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
         router.viewController = viewController
         router.dataStore = interactor
         setUpView()
-    }
-    
-    // MARK: Routing
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
     }
     
     // MARK: View lifecycle
@@ -163,6 +153,8 @@ extension CreateOrderViewController: UITableViewDataSource, UITableViewDelegate 
             let tag = indexPath.section * 10 + indexPath.row
             cell.textField.tag = tag
             textFieldsTags.append(tag)
+            let dictTest = myTexts[tag]
+            cell.textField.text = dictTest
             return cell
         case .switchSection:
             guard let cell: CreateOrderSwitchCell = tableView.dequeueReusableCell(withIdentifier: CreateOrderSwitchCell.identifier, for: indexPath) as? CreateOrderSwitchCell else { return UITableViewCell() }
@@ -186,21 +178,31 @@ extension CreateOrderViewController: UITextFieldDelegate {
         return true
     }
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if let textField = self.view.viewWithTag(20) as? UITextField {
+        let tagPicker = 20
+        let tagDatePicker = 31
+        
+        
+        if let textField = self.view.viewWithTag(tagPicker) as? UITextField {
             textField.inputView = shippingMethodPicker
         }
-        
-        if let textField = self.view.viewWithTag(31) as? UITextField {
+        if let textField = self.view.viewWithTag(tagDatePicker) as? UITextField {
             textField.inputView = expirationDatePicker
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let textField = self.view.viewWithTag(31) as? UITextField {
+        let tagDatePicker = 31
+        
+        if let textField = self.view.viewWithTag(tagDatePicker) as? UITextField {
             textField.text = dateFromPresenter ?? ""
         }
+        myTexts.updateValue(textField.text ?? "", forKey: textField.tag)
+        
+        print(textField.text)
+        print(textField.tag)
     }
 }
+
 // MARK: UIPickerViewDelegate
 
 extension CreateOrderViewController: UIPickerViewDelegate, UIPickerViewDataSource {

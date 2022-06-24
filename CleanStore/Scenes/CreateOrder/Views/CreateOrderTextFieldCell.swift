@@ -7,14 +7,10 @@
 
 import UIKit
 
-protocol CreateOrderTextFieldCellDelegate {
-    func valueChanged(value: String)
-}
 
 class CreateOrderTextFieldCell: UITableViewCell {
     
     static let identifier: String = "CreateOrderTextFieldCell"
-    var delagete: CreateOrderTextFieldCellDelegate?
     
     let titleLabel: UILabel = {
         let title = UILabel()
@@ -24,7 +20,7 @@ class CreateOrderTextFieldCell: UITableViewCell {
         return title
     }()
     
-    let textField: UITextField = {
+    lazy var textField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.keyboardType = UIKeyboardType.default
@@ -86,18 +82,4 @@ class CreateOrderTextFieldCell: UITableViewCell {
         ])
     }
 }
-
-extension CreateOrderTextFieldCell: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        textField.resignFirstResponder()
-        
-    }
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        self.delagete?.valueChanged(value: textField.text ?? String())
-    }
-}
-
-
 

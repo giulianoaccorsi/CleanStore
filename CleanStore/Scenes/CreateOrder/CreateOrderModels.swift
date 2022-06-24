@@ -26,6 +26,19 @@ enum CreateOrder {
             var date: String
         }
     }
+    
+    enum UserInputTextField {
+        struct Request {
+            var date: Date
+        }
+        struct Response {
+            var date: Date
+        }
+        
+        struct ViewModel {
+            var date: String
+        }
+    }
 }
 
 struct FormSection {
