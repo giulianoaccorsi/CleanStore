@@ -27,16 +27,23 @@ enum CreateOrder {
         }
     }
     
-    enum UserInputTextField {
-        struct Request {
-            var date: Date
-        }
+    enum TableView {
+        struct Request {}
         struct Response {
-            var date: Date
+            var formSection: [FormSection]
         }
-        
         struct ViewModel {
-            var date: String
+            var formSection: [FormSection]
+        }
+    }
+
+    enum PickerView {
+        struct Request {}
+        struct Response {
+            var shippingMethods: [String]
+        }
+        struct ViewModel {
+            var shippingMethods: [String]
         }
     }
 }

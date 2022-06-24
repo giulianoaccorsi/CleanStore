@@ -14,11 +14,15 @@ import UIKit
 
 protocol CreateOrderPresentationLogic {
     func presentExpirationDate(response: CreateOrder.FormatExpirationDate.Response)
+    func presentTableView(response: CreateOrder.TableView.Response)
+    func presentPickerView(reponse: CreateOrder.PickerView.Response)
     
 }
 
 class CreateOrderPresenter: CreateOrderPresentationLogic {
+    
     weak var viewController: CreateOrderDisplayLogic?
+    
     let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
@@ -30,5 +34,15 @@ class CreateOrderPresenter: CreateOrderPresentationLogic {
         let date = dateFormatter.string(from: response.date)
         let viewModel = CreateOrder.FormatExpirationDate.ViewModel(date: date)
         viewController?.displayExpirationDate(viewModel: viewModel)
+    }
+    
+    func presentTableView(response: CreateOrder.TableView.Response) {
+        let viewModel = CreateOrder.TableView.ViewModel(formSection: response.formSection)
+        viewController?.displayTableView(viewModel: viewModel)
+    }
+    
+    func presentPickerView(reponse: CreateOrder.PickerView.Response) {
+        let viewModel = CreateOrder.PickerView.ViewModel(shippingMethods: reponse.shippingMethods)
+        viewController?.displayPickerView(viewModel: viewModel)
     }
 }

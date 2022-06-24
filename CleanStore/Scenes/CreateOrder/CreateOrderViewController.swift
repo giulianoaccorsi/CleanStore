@@ -10,10 +10,12 @@ import UIKit
 
 protocol CreateOrderDisplayLogic: AnyObject {
     func displayExpirationDate(viewModel: CreateOrder.FormatExpirationDate.ViewModel)
+    func displayTableView(viewModel: CreateOrder.TableView.ViewModel)
+    func displayPickerView(viewModel: CreateOrder.PickerView.ViewModel)
 }
 
 class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
-    
+
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -40,10 +42,12 @@ class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
     
     
     var interactor: CreateOrderBusinessLogic?
-    var router: (NSObjectProtocol & CreateOrderRoutingLogic & CreateOrderDataPassing)?
+    var router: CreateOrderRoutingLogic?
     var textFieldsTags: [Int] = []
     var myTexts = [Int: String]()
     var dateFromPresenter: String?
+    var formSection: [FormSection] = []
+    var shippingMethods: [String] = []
     
     // MARK: Object lifecycle
     
@@ -70,7 +74,6 @@ class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
         interactor.presenter = presenter
         presenter.viewController = viewController
         router.viewController = viewController
-        router.dataStore = interactor
         setUpView()
     }
     
@@ -78,11 +81,23 @@ class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        interactor?.fillTableView(request: CreateOrder.TableView.Request())
+        interactor?.fillPickerView(request: CreateOrder.PickerView.Request())
     }
     
     func displayExpirationDate(viewModel: CreateOrder.FormatExpirationDate.ViewModel) {
         let date = viewModel.date
         self.dateFromPresenter = date
+    }
+    
+    func displayTableView(viewModel: CreateOrder.TableView.ViewModel) {
+        self.formSection = viewModel.formSection
+        tableView.reloadData()
+    }
+    
+    func displayPickerView(viewModel: CreateOrder.PickerView.ViewModel) {
+        self.shippingMethods = viewModel.shippingMethods
+        self.shippingMethodPicker.reloadAllComponents()
     }
     
     @objc func expirationDatePickerValueChanged() {
@@ -133,18 +148,18 @@ extension CreateOrderViewController: ViewConfiguration {
 extension CreateOrderViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.interactor?.formSection.count ?? 0
+        return formSection.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.interactor?.formSection[section].fields.count ?? 0
+        return formSection[section].fields.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.interactor?.formSection[section].name
+        return formSection[section].name
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cellType = self.interactor?.formSection[indexPath.section].fields[indexPath.row] else { return UITableViewCell() }
+        let cellType = formSection[indexPath.section].fields[indexPath.row]
         switch cellType.type {
         case .textFieldSection:
             guard let cell: CreateOrderTextFieldCell = tableView.dequeueReusableCell(withIdentifier: CreateOrderTextFieldCell.identifier, for: indexPath) as? CreateOrderTextFieldCell else { return UITableViewCell()}
@@ -197,9 +212,6 @@ extension CreateOrderViewController: UITextFieldDelegate {
             textField.text = dateFromPresenter ?? ""
         }
         myTexts.updateValue(textField.text ?? "", forKey: textField.tag)
-        
-        print(textField.text)
-        print(textField.tag)
     }
 }
 
@@ -211,17 +223,17 @@ extension CreateOrderViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return interactor?.shippingMethods.count ?? 0
+        return shippingMethods.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return interactor?.shippingMethods[row]
+        return shippingMethods[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let shippingMethodTAG = 20
         if let textField = self.view.viewWithTag(shippingMethodTAG) as? UITextField {
-            textField.text = interactor?.shippingMethods[row]
+            textField.text = shippingMethods[row]
         }
     }
     
