@@ -12,10 +12,12 @@ protocol CreateOrderDisplayLogic: AnyObject {
     func displayExpirationDate(viewModel: CreateOrder.FormatExpirationDate.ViewModel)
     func displayTableView(viewModel: CreateOrder.TableView.ViewModel)
     func displayPickerView(viewModel: CreateOrder.PickerView.ViewModel)
+    func displayCreatedOrder(viewModel: CreateOrder.SaveOrder.ViewModel)
+    func displayEditedOrder(viewModel: CreateOrder.EditOrder.ViewModel)
 }
 
 class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
-
+    
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -48,18 +50,21 @@ class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
     var dateFromPresenter: String?
     var formSection: [FormSection] = []
     var shippingMethods: [String] = []
+    var orderToEdit: Order?
     
     // MARK: Object lifecycle
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        setup()
-        
+    init() {
+        super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
+    init(orderToEdit: Order) {
+        self.orderToEdit = orderToEdit
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: Setup
@@ -81,6 +86,11 @@ class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+        if let orderToEdit = orderToEdit {
+            let request = CreateOrder.EditOrder.Request(order: orderToEdit)
+            interactor?.fillEditOrder(request: request)
+        }
         interactor?.fillTableView(request: CreateOrder.TableView.Request())
         interactor?.fillPickerView(request: CreateOrder.PickerView.Request())
     }
@@ -98,6 +108,35 @@ class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
     func displayPickerView(viewModel: CreateOrder.PickerView.ViewModel) {
         self.shippingMethods = viewModel.shippingMethods
         self.shippingMethodPicker.reloadAllComponents()
+    }
+    
+    func displayCreatedOrder(viewModel: CreateOrder.SaveOrder.ViewModel) {
+        if viewModel.order != nil {
+//          router?.routeToListOrders(segue: nil)
+        }
+    }
+    
+    func displayEditedOrder(viewModel: CreateOrder.EditOrder.ViewModel) {
+        let order = viewModel.order
+        myTexts[0] = order.firstName
+        myTexts[1] = order.lastName
+        myTexts[2] = order.phone
+        myTexts[3] = order.email
+        myTexts[4] = "\(order.total)"
+        myTexts[10] = order.shipmentAddress.street1
+        myTexts[11] = order.shipmentAddress.street2
+        myTexts[12] = order.shipmentAddress.city
+        myTexts[13] = order.shipmentAddress.state
+        myTexts[14] = order.shipmentAddress.zip
+        myTexts[20] = order.shipmentMethod
+        myTexts[30] = order.paymentMethod.creditCardNumber
+        myTexts[31] = order.paymentMethod.expirationDate
+        myTexts[32] = order.paymentMethod.cvv
+        myTexts[41] = order.billingAddress.street1
+        myTexts[42] = order.billingAddress.street2
+        myTexts[43] = order.billingAddress.city
+        myTexts[44] = order.billingAddress.state
+        myTexts[45] = order.billingAddress.zip
     }
     
     @objc func expirationDatePickerValueChanged() {
@@ -140,6 +179,29 @@ extension CreateOrderViewController: ViewConfiguration {
     
     @objc func saveButton() {
         
+        let firstName = myTexts[0] ?? ""
+        let lastName = myTexts[1] ?? ""
+        let phone = myTexts[2] ?? ""
+        let email = myTexts[3] ?? ""
+        let total = myTexts[4] ?? ""
+        let shippingStreet1 = myTexts[10] ?? ""
+        let shippingStreet2 = myTexts[11] ?? ""
+        let shippingCity = myTexts[12] ?? ""
+        let shippingState = myTexts[13] ?? ""
+        let shippingZIP = myTexts[14] ?? ""
+        let shippingMethod = myTexts[20] ?? ""
+        let creditCardNumber = myTexts[30] ?? ""
+        let expirationDate = myTexts[31] ?? ""
+        let cvv = myTexts[32] ?? ""
+        let billingStreet1 = myTexts[41] ?? ""
+        let billingStreet2 = myTexts[42] ?? ""
+        let billingCity = myTexts[43] ?? ""
+        let billingState = myTexts[44] ?? ""
+        let billingZIP = myTexts[45] ?? ""
+        
+        let request = CreateOrder.SaveOrder.Request(order: OrderFormFields(firstName: firstName, lastName: lastName, phone: phone, email: email, billingAddressStreet1: billingStreet1, billingAddressStreet2: billingStreet2, billingAddressCity: billingCity, billingAddressState: billingState, billingAddressZIP: billingZIP, paymentMethodCreditCardNumber: creditCardNumber, paymentMethodCVV: cvv, paymentMethodExpiration: expirationDate, shipmentAddressStreet1: shippingStreet1, shipmentAddressStreet2: shippingStreet2, shipmentAddressCity: shippingCity, shipmentAddressState: shippingState, shipmentAddressZIP: shippingZIP, shipmentMethodSpeed: shippingMethod, total: total))
+        
+        interactor?.saveOrderForm(request: request)
     }
 }
 

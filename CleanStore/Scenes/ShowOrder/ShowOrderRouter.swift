@@ -8,10 +8,17 @@
 
 import UIKit
 
-@objc protocol ShowOrderRoutingLogic {
+protocol ShowOrderRoutingLogic {
+    func routeToCreateOrder(order: Order)
 }
 
-class ShowOrderRouter: NSObject, ShowOrderRoutingLogic {
-  weak var viewController: ShowOrderViewController?
-  
+class ShowOrderRouter: ShowOrderRoutingLogic {
+    
+    weak var viewController: ShowOrderViewController?
+    
+    func routeToCreateOrder(order: Order) {
+        let viewController = CreateOrderViewController(orderToEdit: order)
+        self.viewController?.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
 }

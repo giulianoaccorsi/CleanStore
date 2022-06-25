@@ -9,6 +9,7 @@ import UIKit
 
 protocol ShowOrderDisplayLogic: AnyObject {
     func displayOrder(viewModel: ShowOrder.GetOrder.ViewModel)
+    func displayOrderToEdit(viewModel: ShowOrder.EditOrder.ViewModel)
 }
 
 class ShowOrderViewController: UIViewController, ShowOrderDisplayLogic {
@@ -172,17 +173,22 @@ class ShowOrderViewController: UIViewController, ShowOrderDisplayLogic {
     }
     
     func displayOrder(viewModel: ShowOrder.GetOrder.ViewModel) {
-         let displayedOrder = viewModel.displayedOrder
-         idLabel.text = displayedOrder.id
-         dateLabel.text = displayedOrder.date
-         emailLabel.text = displayedOrder.email
-         nameLabel.text = displayedOrder.name
-         totalLabel.text = displayedOrder.total
-   }
-
+        let displayedOrder = viewModel.displayedOrder
+        idLabel.text = displayedOrder.id
+        dateLabel.text = displayedOrder.date
+        emailLabel.text = displayedOrder.email
+        nameLabel.text = displayedOrder.name
+        totalLabel.text = displayedOrder.total
+    }
+    
+    func displayOrderToEdit(viewModel: ShowOrder.EditOrder.ViewModel) {
+        self.router?.routeToCreateOrder(order: viewModel.order)
+    }
+    
+    
     
     @objc func editButton() {
-        
+        interactor?.editOrder(request: ShowOrder.EditOrder.Request())
     }
 }
 

@@ -9,9 +9,11 @@ import UIKit
 
 protocol ShowOrderBusinessLogic {
     func getOrder(request: ShowOrder.GetOrder.Request)
+    func editOrder(request: ShowOrder.EditOrder.Request)
 }
 
 class ShowOrderInteractor: ShowOrderBusinessLogic {
+    
     var presenter: ShowOrderPresentationLogic?
     var worker = OrdersWorker(ordersStore: OrdersMemStore())
     let id: String
@@ -25,6 +27,15 @@ class ShowOrderInteractor: ShowOrderBusinessLogic {
             guard let orderFetched = order else {return}
             let response = ShowOrder.GetOrder.Response(order: orderFetched)
             self.presenter?.presentOrder(response: response)
+        }
+    }
+    
+    func editOrder(request: ShowOrder.EditOrder.Request) {
+        worker.fetchOrder(id: id) { order in
+            guard let orderFetched = order else {return}
+            let response = ShowOrder.EditOrder.Response(order: orderFetched)
+            self.presenter?.presentOrderToEdit(response: response)
+            
         }
     }
 }

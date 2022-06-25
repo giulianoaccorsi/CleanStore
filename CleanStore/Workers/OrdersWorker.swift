@@ -9,6 +9,7 @@ import UIKit
 
 protocol OrdersStoreProtocol {
     func fetchOrders(completionHandler: @escaping (() throws -> [Order]) -> Void)
+    func createOrder(orderToCreate: Order, completionHandler: @escaping (Order?) -> Void)
 }
 
 class OrdersWorker {
@@ -49,4 +50,11 @@ class OrdersWorker {
         }
     }
     
+    func createOrder(orderToCreate: Order, completionHandler: @escaping (Order?) -> Void){
+        ordersStore.createOrder(orderToCreate: orderToCreate) { order in
+            DispatchQueue.main.async {
+                completionHandler(order)
+            }
+        }
+    }
 }

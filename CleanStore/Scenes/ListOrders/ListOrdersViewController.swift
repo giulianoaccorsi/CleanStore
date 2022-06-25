@@ -63,6 +63,13 @@ class ListOrdersViewController: UIViewController, ListOrdersDisplayLogic {
         fetchOrdersOnLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
+                self.tableView.deselectRow(at: selectionIndexPath, animated: animated)
+            }
+    }
+    
     func fetchOrdersOnLoad() {
         let request = ListOrders.FetchOrders.Request()
         interactor?.fetchOrders(request: request)

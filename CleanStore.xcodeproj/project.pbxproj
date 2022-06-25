@@ -23,6 +23,7 @@
 		1916575E2856D902001ED343 /* ShowOrderModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191657582856D902001ED343 /* ShowOrderModels.swift */; };
 		1916575F2856D902001ED343 /* ShowOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191657592856D902001ED343 /* ShowOrderViewController.swift */; };
 		191657602856D902001ED343 /* ShowOrderInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1916575A2856D902001ED343 /* ShowOrderInteractor.swift */; };
+		191A82F62866B374002922A5 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191A82F52866B374002922A5 /* KeyboardLayoutConstraint.swift */; };
 		191D05D128468DDE00236963 /* CreateOrderPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191D05CB28468DDE00236963 /* CreateOrderPresenter.swift */; };
 		191D05D228468DDE00236963 /* CreateOrderWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191D05CC28468DDE00236963 /* CreateOrderWorker.swift */; };
 		191D05D328468DDE00236963 /* CreateOrderRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191D05CD28468DDE00236963 /* CreateOrderRouter.swift */; };
@@ -36,9 +37,11 @@
 		19E7193628468BBF00F3DA75 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E7193528468BBF00F3DA75 /* SceneDelegate.swift */; };
 		19E7193D28468BC000F3DA75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19E7193C28468BC000F3DA75 /* Assets.xcassets */; };
 		19E7194028468BC000F3DA75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19E7193E28468BC000F3DA75 /* LaunchScreen.storyboard */; };
+		F94E70B24C4B768CB4BC4591 /* Pods_CleanStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 866C10A754A6D84C79C9EACB /* Pods_CleanStore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		045F9B533E177297056C31CF /* Pods-CleanStore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CleanStore.debug.xcconfig"; path = "Target Support Files/Pods-CleanStore/Pods-CleanStore.debug.xcconfig"; sourceTree = "<group>"; };
 		1916572F2856A45A001ED343 /* ListOrdersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOrdersPresenter.swift; sourceTree = "<group>"; };
 		191657302856A45A001ED343 /* ListOrdersWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOrdersWorker.swift; sourceTree = "<group>"; };
 		191657312856A45A001ED343 /* ListOrdersRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOrdersRouter.swift; sourceTree = "<group>"; };
@@ -55,6 +58,7 @@
 		191657582856D902001ED343 /* ShowOrderModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOrderModels.swift; sourceTree = "<group>"; };
 		191657592856D902001ED343 /* ShowOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOrderViewController.swift; sourceTree = "<group>"; };
 		1916575A2856D902001ED343 /* ShowOrderInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOrderInteractor.swift; sourceTree = "<group>"; };
+		191A82F52866B374002922A5 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
 		191D05CB28468DDE00236963 /* CreateOrderPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderPresenter.swift; sourceTree = "<group>"; };
 		191D05CC28468DDE00236963 /* CreateOrderWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderWorker.swift; sourceTree = "<group>"; };
 		191D05CD28468DDE00236963 /* CreateOrderRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderRouter.swift; sourceTree = "<group>"; };
@@ -70,6 +74,8 @@
 		19E7193C28468BC000F3DA75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		19E7193F28468BC000F3DA75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		19E7194128468BC000F3DA75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4CEB811A8D2F3D0CAC525B8C /* Pods-CleanStore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CleanStore.release.xcconfig"; path = "Target Support Files/Pods-CleanStore/Pods-CleanStore.release.xcconfig"; sourceTree = "<group>"; };
+		866C10A754A6D84C79C9EACB /* Pods_CleanStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CleanStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +83,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F94E70B24C4B768CB4BC4591 /* Pods_CleanStore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B460495B90DB6ECAEB6AA8C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				866C10A754A6D84C79C9EACB /* Pods_CleanStore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0D10D03BD817F801C16EC415 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				045F9B533E177297056C31CF /* Pods-CleanStore.debug.xcconfig */,
+				4CEB811A8D2F3D0CAC525B8C /* Pods-CleanStore.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		1916573B2856AB35001ED343 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				197AF35C2851897D00043369 /* ViewConfiguration.swift */,
+				191A82F52866B374002922A5 /* KeyboardLayoutConstraint.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -199,6 +225,8 @@
 			children = (
 				19E7193228468BBF00F3DA75 /* CleanStore */,
 				19E7193128468BBF00F3DA75 /* Products */,
+				0D10D03BD817F801C16EC415 /* Pods */,
+				0B460495B90DB6ECAEB6AA8C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -231,9 +259,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 19E7194428468BC000F3DA75 /* Build configuration list for PBXNativeTarget "CleanStore" */;
 			buildPhases = (
+				372DADD20FFA02C294E90F23 /* [CP] Check Pods Manifest.lock */,
 				19E7192C28468BBF00F3DA75 /* Sources */,
 				19E7192D28468BBF00F3DA75 /* Frameworks */,
 				19E7192E28468BBF00F3DA75 /* Resources */,
+				6B5B72E1459EC122808AFE92 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -289,6 +319,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		372DADD20FFA02C294E90F23 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CleanStore-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6B5B72E1459EC122808AFE92 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CleanStore/Pods-CleanStore-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CleanStore/Pods-CleanStore-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CleanStore/Pods-CleanStore-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		19E7192C28468BBF00F3DA75 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -319,6 +391,7 @@
 				19E7193628468BBF00F3DA75 /* SceneDelegate.swift in Sources */,
 				1916575C2856D902001ED343 /* ShowOrderWorker.swift in Sources */,
 				1916575E2856D902001ED343 /* ShowOrderModels.swift in Sources */,
+				191A82F62866B374002922A5 /* KeyboardLayoutConstraint.swift in Sources */,
 				1916575B2856D902001ED343 /* ShowOrderPresenter.swift in Sources */,
 				191D05D328468DDE00236963 /* CreateOrderRouter.swift in Sources */,
 			);
@@ -454,6 +527,7 @@
 		};
 		19E7194528468BC000F3DA75 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 045F9B533E177297056C31CF /* Pods-CleanStore.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -482,6 +556,7 @@
 		};
 		19E7194628468BC000F3DA75 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4CEB811A8D2F3D0CAC525B8C /* Pods-CleanStore.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

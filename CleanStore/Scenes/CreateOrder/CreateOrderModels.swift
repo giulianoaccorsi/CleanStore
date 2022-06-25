@@ -14,6 +14,32 @@ import UIKit
 
 enum CreateOrder {
     
+    enum EditOrder {
+        struct Request {
+            var order: Order
+        }
+        struct Response {
+            var order: Order
+        }
+        
+        struct ViewModel {
+            var order: Order
+        }
+    }
+    
+    enum SaveOrder {
+        struct Request {
+            var order: OrderFormFields
+        }
+        struct Response {
+            var order: Order?
+        }
+        
+        struct ViewModel {
+            var order: Order?
+        }
+    }
+    
     enum FormatExpirationDate {
         struct Request {
             var date: Date
@@ -36,7 +62,7 @@ enum CreateOrder {
             var formSection: [FormSection]
         }
     }
-
+    
     enum PickerView {
         struct Request {}
         struct Response {
@@ -68,4 +94,34 @@ struct FormSection {
     let name: String
     let fields: [Field]
     
+}
+
+struct OrderFormFields {
+    // MARK: Contact info
+    var firstName: String
+    var lastName: String
+    var phone: String
+    var email: String
+    
+    // MARK: Payment info
+    var billingAddressStreet1: String
+    var billingAddressStreet2: String
+    var billingAddressCity: String
+    var billingAddressState: String
+    var billingAddressZIP: String
+    
+    var paymentMethodCreditCardNumber: String
+    var paymentMethodCVV: String
+    var paymentMethodExpiration: String
+    
+    // MARK: Shipping info
+    var shipmentAddressStreet1: String
+    var shipmentAddressStreet2: String
+    var shipmentAddressCity: String
+    var shipmentAddressState: String
+    var shipmentAddressZIP: String
+    var shipmentMethodSpeed: String
+    
+    // MARK: Misc
+    var total: String
 }

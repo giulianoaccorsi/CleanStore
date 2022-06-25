@@ -11,8 +11,8 @@ enum ShowOrder {
     // MARK: Use cases
     
     enum GetOrder {
-        struct Request {
-        }
+        struct Request {}
+        
         struct Response {
             var order: Order
         }
@@ -25,6 +25,17 @@ enum ShowOrder {
                 var total: String
             }
             var displayedOrder: DisplayedOrder
+        }
+    }
+    
+    enum EditOrder {
+        struct Request {}
+        
+        struct Response {
+            var order: Order
+        }
+        struct ViewModel {
+            var order: Order
         }
     }
 }
