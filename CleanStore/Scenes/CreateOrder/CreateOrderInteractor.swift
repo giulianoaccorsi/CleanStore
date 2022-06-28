@@ -14,7 +14,7 @@ protocol CreateOrderInteractorProtocol {
     func loadPickerView(request: CreateOrder.PickerView.Request)
     func saveOrder(request: CreateOrder.SaveOrder.Request)
     func loadOrderToEdit(request: CreateOrder.EditOrder.Request)
-    func updateOrder(request: CreateOrder.EditOrder.Request)
+    func updateOrder(request: CreateOrder.UpdateOrder.Request)
 }
 
 class CreateOrderInteractor: CreateOrderInteractorProtocol {
@@ -62,7 +62,7 @@ class CreateOrderInteractor: CreateOrderInteractorProtocol {
     }
     
     func saveOrder(request: CreateOrder.SaveOrder.Request) {
-        let orderToCreate = buildOrderFromOrderFormFields(request.order)
+        let orderToCreate = buildOrderFromOrderFormFields(request.order, id: nil, date: nil)
         ordersWorker.createOrder(orderToCreate: orderToCreate) { order in
             let response = CreateOrder.SaveOrder.Response(order: order)
             self.presenter?.presentCreatedOrder(response: response)
@@ -74,8 +74,8 @@ class CreateOrderInteractor: CreateOrderInteractorProtocol {
         presenter?.presentEditedOrder(reponse: response)
     }
     
-    func updateOrder(request: CreateOrder.EditOrder.Request) {
-        let orderToUpdate = request.order
+    func updateOrder(request: CreateOrder.UpdateOrder.Request) {
+        let orderToUpdate = buildOrderFromOrderFormFields(request.order, id: request.id, date: request.date)
         ordersWorker.updateOrder(orderToUpdate: orderToUpdate) { order in
             let response = CreateOrder.EditOrder.Response(order: order)
             self.presenter?.presentUpdateOrder(reponse: response)
@@ -88,12 +88,16 @@ class CreateOrderInteractor: CreateOrderInteractorProtocol {
         presenter?.presentExpirationDate(response: response)
     }
     
-    private func buildOrderFromOrderFormFields(_ orderFormFields: OrderFormFields) -> Order {
+    private func buildOrderFromOrderFormFields(_ orderFormFields: OrderFormFields, id: String?, date: Date?) -> Order {
         let billingAddress = Address(street1: orderFormFields.billingAddressStreet1, street2: orderFormFields.billingAddressStreet2, city: orderFormFields.billingAddressCity, state: orderFormFields.billingAddressState, zip: orderFormFields.billingAddressZIP)
         
         let paymentMethod = PaymentMethod(creditCardNumber: orderFormFields.paymentMethodCreditCardNumber, expirationDate: orderFormFields.paymentMethodExpiration, cvv: orderFormFields.paymentMethodCVV)
         
         let shipmentAddress = Address(street1: orderFormFields.shipmentAddressStreet1, street2: orderFormFields.shipmentAddressStreet2, city: orderFormFields.shipmentAddressCity, state: orderFormFields.shipmentAddressState, zip: orderFormFields.shipmentAddressZIP)
+        
+        if let id = id, let date = date {
+            return Order(firstName: orderFormFields.firstName, lastName: orderFormFields.lastName, phone: orderFormFields.phone, email: orderFormFields.email, total: NSDecimalNumber(string: orderFormFields.total), shipmentAddress: shipmentAddress, shipmentMethod: orderFormFields.shipmentMethodSpeed, billingAddress: billingAddress, paymentMethod: paymentMethod, id: id, date: date)
+        }
         
         return Order(firstName: orderFormFields.firstName, lastName: orderFormFields.lastName, phone: orderFormFields.phone, email: orderFormFields.email, total: NSDecimalNumber(string: orderFormFields.total), shipmentAddress: shipmentAddress, shipmentMethod: orderFormFields.shipmentMethodSpeed, billingAddress: billingAddress, paymentMethod: paymentMethod, id: "\(arc4random_uniform(9999))", date: Date())
     }

@@ -8,11 +8,20 @@
 
 import UIKit
 
-@objc protocol CreateOrderRoutingLogic {
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
+@objc protocol CreateOrderRouterProtocol {
+    func routeToListOrdersViewController()
+    func routeToShowOrderViewController()
+    
 }
 
-class CreateOrderRouter: CreateOrderRoutingLogic {
-  weak var viewController: CreateOrderViewController?
-
+class CreateOrderRouter: CreateOrderRouterProtocol {
+    weak var viewController: CreateOrderViewController?
+    
+    func routeToListOrdersViewController() {
+        viewController?.navigationController?.popViewController(animated: true)
+    }
+    
+    func routeToShowOrderViewController() {
+        viewController?.navigationController?.popViewController(animated: true)
+    }
 }

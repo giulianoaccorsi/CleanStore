@@ -18,7 +18,7 @@ protocol CreateOrderViewControllerProtocol: AnyObject {
 }
 
 class CreateOrderViewController: UIViewController, CreateOrderViewControllerProtocol {
-
+    
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +45,7 @@ class CreateOrderViewController: UIViewController, CreateOrderViewControllerProt
     
     
     var interactor: CreateOrderInteractorProtocol?
-    var router: CreateOrderRoutingLogic?
+    var router: CreateOrderRouterProtocol?
     var textFieldsTags: [Int] = []
     var myTexts = [Int: String]()
     var dateFromPresenter: String?
@@ -113,7 +113,7 @@ class CreateOrderViewController: UIViewController, CreateOrderViewControllerProt
     }
     
     func displayCreatedOrder(viewModel: CreateOrder.SaveOrder.ViewModel) {
-        navigationController?.popViewController(animated: true)
+        router?.routeToListOrdersViewController()
     }
     
     func displayOrderToEdit(viewModel: CreateOrder.EditOrder.ViewModel) {
@@ -140,7 +140,7 @@ class CreateOrderViewController: UIViewController, CreateOrderViewControllerProt
     }
     
     func displayUpdateOrder(viewModel: CreateOrder.EditOrder.ViewModel) {
-        self.navigationController?.popViewController(animated: true)
+        router?.routeToShowOrderViewController()
     }
     
     @objc func expirationDatePickerValueChanged() {
@@ -205,7 +205,7 @@ extension CreateOrderViewController: ViewConfiguration {
         let billingZIP = myTexts[45] ?? ""
         
         if let orderUpdate = orderToEdit {
-            let request = CreateOrder.EditOrder.Request(order: Order(firstName: firstName, lastName: lastName, phone: phone, email: email, total: NSDecimalNumber(string: total), shipmentAddress: Address(street1: shippingStreet1, street2: shippingStreet2, city: shippingCity, state: shippingState, zip: shippingZIP), shipmentMethod: shippingMethod, billingAddress: Address(street1: billingStreet1, street2: billingStreet2, city: billingCity, state: billingState, zip: billingZIP), paymentMethod: PaymentMethod(creditCardNumber: creditCardNumber, expirationDate: expirationDate, cvv: cvv), id: orderUpdate.id, date: orderUpdate.date))
+            let request = CreateOrder.UpdateOrder.Request(order: OrderFormFields(firstName: firstName, lastName: lastName, phone: phone, email: email, billingAddressStreet1: billingStreet1, billingAddressStreet2: billingStreet2, billingAddressCity: billingCity, billingAddressState: billingState, billingAddressZIP: billingZIP, paymentMethodCreditCardNumber: creditCardNumber, paymentMethodCVV: cvv, paymentMethodExpiration: expirationDate, shipmentAddressStreet1: shippingStreet1, shipmentAddressStreet2: shippingStreet2, shipmentAddressCity: shippingCity, shipmentAddressState: shippingState, shipmentAddressZIP: shippingZIP, shipmentMethodSpeed: shippingMethod, total: total), id: orderUpdate.id, date: orderUpdate.date)
             interactor?.updateOrder(request: request)
             return
         }
@@ -257,12 +257,12 @@ extension CreateOrderViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let totalTAG = 4
         if textField.tag == totalTAG {
-                     if string == "," {
-                         textField.text = textField.text! + "."
-                         return false
-                     }
-               }
-                return true
+            if string == "," {
+                textField.text = textField.text! + "."
+                return false
+            }
+        }
+        return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
