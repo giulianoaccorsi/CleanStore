@@ -35,7 +35,7 @@ class ShowOrderPresenter: ShowOrderPresentationLogic {
         let order = response.order
         
         let date = dateFormatter.string(from: order.date)
-        let total = currencyFormatter.string(from: order.total)!
+        let total = currencyFormatter.string(from: order.total) ?? ""
         let displayedOrder = ShowOrder.GetOrder.ViewModel.DisplayedOrder(id: order.id, date: date, email: order.email, name: "\(order.firstName) \(order.lastName)", total: total)
         
         let viewModel = ShowOrder.GetOrder.ViewModel(displayedOrder: displayedOrder)

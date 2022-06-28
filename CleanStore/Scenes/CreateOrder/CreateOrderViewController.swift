@@ -258,7 +258,7 @@ extension CreateOrderViewController: UITextFieldDelegate {
         let totalTAG = 4
         if textField.tag == totalTAG {
             if string == "," {
-                textField.text = textField.text! + "."
+                textField.text = textField.text ?? "" + "."
                 return false
             }
         }
