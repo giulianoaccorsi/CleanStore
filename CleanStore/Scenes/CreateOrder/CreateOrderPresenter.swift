@@ -18,11 +18,12 @@ protocol CreateOrderPresentationLogic {
     func presentPickerView(reponse: CreateOrder.PickerView.Response)
     func presentCreatedOrder(response: CreateOrder.SaveOrder.Response)
     func presentEditedOrder(reponse: CreateOrder.EditOrder.Response)
+    func presentUpdateOrder(reponse: CreateOrder.EditOrder.Response)
     
 }
 
 class CreateOrderPresenter: CreateOrderPresentationLogic {
- 
+
     weak var viewController: CreateOrderDisplayLogic?
     
     let dateFormatter: DateFormatter = {
@@ -57,4 +58,10 @@ class CreateOrderPresenter: CreateOrderPresentationLogic {
         let viewModel = CreateOrder.EditOrder.ViewModel(order: reponse.order)
         viewController?.displayEditedOrder(viewModel: viewModel)
     }
+    func presentUpdateOrder(reponse: CreateOrder.EditOrder.Response) {
+        let viewModel = CreateOrder.EditOrder.ViewModel(order: reponse.order)
+        viewController?.displayUpdateOrder(viewModel: viewModel)
+    }
+    
+ 
 }

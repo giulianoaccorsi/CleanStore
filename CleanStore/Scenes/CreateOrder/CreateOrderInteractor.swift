@@ -14,15 +14,13 @@ protocol CreateOrderBusinessLogic {
     func fillPickerView(request: CreateOrder.PickerView.Request)
     func saveOrderForm(request: CreateOrder.SaveOrder.Request)
     func fillEditOrder(request: CreateOrder.EditOrder.Request)
-    
-    
+    func editOrder(request: CreateOrder.EditOrder.Request)
 }
 
 class CreateOrderInteractor: CreateOrderBusinessLogic {
-
+ 
     var presenter: CreateOrderPresentationLogic?
-    var orderToEdit: Order?
-    var ordersWorker = OrdersWorker(ordersStore: OrdersMemStore())
+    var ordersWorker = OrdersWorker(ordersStore: OrdersMemStore.shared)
     
     var shippingMethods = ["Standard Shipping", "One-Day Shipping", "Two-Day Shipping"]
     
@@ -61,9 +59,16 @@ class CreateOrderInteractor: CreateOrderBusinessLogic {
     func saveOrderForm(request: CreateOrder.SaveOrder.Request) {
         let orderToCreate = buildOrderFromOrderFormFields(request.order)
         ordersWorker.createOrder(orderToCreate: orderToCreate) { order in
-            self.orderToEdit = order
             let response = CreateOrder.SaveOrder.Response(order: order)
             self.presenter?.presentCreatedOrder(response: response)
+        }
+    }
+    
+    func editOrder(request: CreateOrder.EditOrder.Request) {
+        let orderToUpdate = request.order
+        ordersWorker.updateOrder(orderToUpdate: orderToUpdate) { order in
+            let response = CreateOrder.EditOrder.Response(order: order)
+            self.presenter?.presentUpdateOrder(reponse: response)
         }
     }
     
@@ -90,6 +95,6 @@ class CreateOrderInteractor: CreateOrderBusinessLogic {
         
         let shipmentAddress = Address(street1: orderFormFields.shipmentAddressStreet1, street2: orderFormFields.shipmentAddressStreet2, city: orderFormFields.shipmentAddressCity, state: orderFormFields.shipmentAddressState, zip: orderFormFields.shipmentAddressZIP)
         
-        return Order(firstName: orderFormFields.firstName, lastName: orderFormFields.lastName, phone: orderFormFields.phone, email: orderFormFields.email, total: NSDecimalNumber(string: orderFormFields.total), shipmentAddress: shipmentAddress, shipmentMethod: orderFormFields.shipmentMethodSpeed, billingAddress: billingAddress, paymentMethod: paymentMethod, id: "\(arc4random())", date: Date())
+        return Order(firstName: orderFormFields.firstName, lastName: orderFormFields.lastName, phone: orderFormFields.phone, email: orderFormFields.email, total: NSDecimalNumber(string: orderFormFields.total), shipmentAddress: shipmentAddress, shipmentMethod: orderFormFields.shipmentMethodSpeed, billingAddress: billingAddress, paymentMethod: paymentMethod, id: "\(arc4random_uniform(9999))", date: Date())
     }
 }

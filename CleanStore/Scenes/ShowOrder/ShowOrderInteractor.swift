@@ -15,7 +15,7 @@ protocol ShowOrderBusinessLogic {
 class ShowOrderInteractor: ShowOrderBusinessLogic {
     
     var presenter: ShowOrderPresentationLogic?
-    var worker = OrdersWorker(ordersStore: OrdersMemStore())
+    var worker = OrdersWorker(ordersStore: OrdersMemStore.shared)
     let id: String
     
     init(id: String) {

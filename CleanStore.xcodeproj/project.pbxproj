@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		191657352856A45A001ED343 /* ListOrdersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1916572F2856A45A001ED343 /* ListOrdersPresenter.swift */; };
-		191657362856A45A001ED343 /* ListOrdersWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191657302856A45A001ED343 /* ListOrdersWorker.swift */; };
 		191657372856A45A001ED343 /* ListOrdersRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191657312856A45A001ED343 /* ListOrdersRouter.swift */; };
 		191657382856A45A001ED343 /* ListOrdersModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191657322856A45A001ED343 /* ListOrdersModels.swift */; };
 		191657392856A45A001ED343 /* ListOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191657332856A45A001ED343 /* ListOrdersViewController.swift */; };
@@ -18,14 +17,11 @@
 		191657442856B1EA001ED343 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191657432856B1EA001ED343 /* Order.swift */; };
 		191657472856B355001ED343 /* OrdersMemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191657462856B355001ED343 /* OrdersMemStore.swift */; };
 		1916575B2856D902001ED343 /* ShowOrderPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191657552856D902001ED343 /* ShowOrderPresenter.swift */; };
-		1916575C2856D902001ED343 /* ShowOrderWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191657562856D902001ED343 /* ShowOrderWorker.swift */; };
 		1916575D2856D902001ED343 /* ShowOrderRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191657572856D902001ED343 /* ShowOrderRouter.swift */; };
 		1916575E2856D902001ED343 /* ShowOrderModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191657582856D902001ED343 /* ShowOrderModels.swift */; };
 		1916575F2856D902001ED343 /* ShowOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191657592856D902001ED343 /* ShowOrderViewController.swift */; };
 		191657602856D902001ED343 /* ShowOrderInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1916575A2856D902001ED343 /* ShowOrderInteractor.swift */; };
-		191A82F62866B374002922A5 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191A82F52866B374002922A5 /* KeyboardLayoutConstraint.swift */; };
 		191D05D128468DDE00236963 /* CreateOrderPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191D05CB28468DDE00236963 /* CreateOrderPresenter.swift */; };
-		191D05D228468DDE00236963 /* CreateOrderWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191D05CC28468DDE00236963 /* CreateOrderWorker.swift */; };
 		191D05D328468DDE00236963 /* CreateOrderRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191D05CD28468DDE00236963 /* CreateOrderRouter.swift */; };
 		191D05D428468DDE00236963 /* CreateOrderModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191D05CE28468DDE00236963 /* CreateOrderModels.swift */; };
 		191D05D528468DDE00236963 /* CreateOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191D05CF28468DDE00236963 /* CreateOrderViewController.swift */; };
@@ -43,7 +39,6 @@
 /* Begin PBXFileReference section */
 		045F9B533E177297056C31CF /* Pods-CleanStore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CleanStore.debug.xcconfig"; path = "Target Support Files/Pods-CleanStore/Pods-CleanStore.debug.xcconfig"; sourceTree = "<group>"; };
 		1916572F2856A45A001ED343 /* ListOrdersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOrdersPresenter.swift; sourceTree = "<group>"; };
-		191657302856A45A001ED343 /* ListOrdersWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOrdersWorker.swift; sourceTree = "<group>"; };
 		191657312856A45A001ED343 /* ListOrdersRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOrdersRouter.swift; sourceTree = "<group>"; };
 		191657322856A45A001ED343 /* ListOrdersModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOrdersModels.swift; sourceTree = "<group>"; };
 		191657332856A45A001ED343 /* ListOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOrdersViewController.swift; sourceTree = "<group>"; };
@@ -53,14 +48,11 @@
 		191657432856B1EA001ED343 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		191657462856B355001ED343 /* OrdersMemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersMemStore.swift; sourceTree = "<group>"; };
 		191657552856D902001ED343 /* ShowOrderPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOrderPresenter.swift; sourceTree = "<group>"; };
-		191657562856D902001ED343 /* ShowOrderWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOrderWorker.swift; sourceTree = "<group>"; };
 		191657572856D902001ED343 /* ShowOrderRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOrderRouter.swift; sourceTree = "<group>"; };
 		191657582856D902001ED343 /* ShowOrderModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOrderModels.swift; sourceTree = "<group>"; };
 		191657592856D902001ED343 /* ShowOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOrderViewController.swift; sourceTree = "<group>"; };
 		1916575A2856D902001ED343 /* ShowOrderInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOrderInteractor.swift; sourceTree = "<group>"; };
-		191A82F52866B374002922A5 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
 		191D05CB28468DDE00236963 /* CreateOrderPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderPresenter.swift; sourceTree = "<group>"; };
-		191D05CC28468DDE00236963 /* CreateOrderWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderWorker.swift; sourceTree = "<group>"; };
 		191D05CD28468DDE00236963 /* CreateOrderRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderRouter.swift; sourceTree = "<group>"; };
 		191D05CE28468DDE00236963 /* CreateOrderModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderModels.swift; sourceTree = "<group>"; };
 		191D05CF28468DDE00236963 /* CreateOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderViewController.swift; sourceTree = "<group>"; };
@@ -104,7 +96,6 @@
 				045F9B533E177297056C31CF /* Pods-CleanStore.debug.xcconfig */,
 				4CEB811A8D2F3D0CAC525B8C /* Pods-CleanStore.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -144,7 +135,6 @@
 			isa = PBXGroup;
 			children = (
 				191657552856D902001ED343 /* ShowOrderPresenter.swift */,
-				191657562856D902001ED343 /* ShowOrderWorker.swift */,
 				191657572856D902001ED343 /* ShowOrderRouter.swift */,
 				191657582856D902001ED343 /* ShowOrderModels.swift */,
 				191657592856D902001ED343 /* ShowOrderViewController.swift */,
@@ -168,7 +158,6 @@
 			children = (
 				197AF35F28518B6E00043369 /* Views */,
 				191D05CB28468DDE00236963 /* CreateOrderPresenter.swift */,
-				191D05CC28468DDE00236963 /* CreateOrderWorker.swift */,
 				191D05CD28468DDE00236963 /* CreateOrderRouter.swift */,
 				191D05CE28468DDE00236963 /* CreateOrderModels.swift */,
 				191D05CF28468DDE00236963 /* CreateOrderViewController.swift */,
@@ -181,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				197AF35C2851897D00043369 /* ViewConfiguration.swift */,
-				191A82F52866B374002922A5 /* KeyboardLayoutConstraint.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -211,7 +199,6 @@
 			children = (
 				1916573B2856AB35001ED343 /* Views */,
 				1916572F2856A45A001ED343 /* ListOrdersPresenter.swift */,
-				191657302856A45A001ED343 /* ListOrdersWorker.swift */,
 				191657312856A45A001ED343 /* ListOrdersRouter.swift */,
 				191657322856A45A001ED343 /* ListOrdersModels.swift */,
 				191657332856A45A001ED343 /* ListOrdersViewController.swift */,
@@ -371,7 +358,6 @@
 				191657472856B355001ED343 /* OrdersMemStore.swift in Sources */,
 				191657442856B1EA001ED343 /* Order.swift in Sources */,
 				191D05D528468DDE00236963 /* CreateOrderViewController.swift in Sources */,
-				191657362856A45A001ED343 /* ListOrdersWorker.swift in Sources */,
 				191657602856D902001ED343 /* ShowOrderInteractor.swift in Sources */,
 				191657392856A45A001ED343 /* ListOrdersViewController.swift in Sources */,
 				191657382856A45A001ED343 /* ListOrdersModels.swift in Sources */,
@@ -379,7 +365,6 @@
 				191657352856A45A001ED343 /* ListOrdersPresenter.swift in Sources */,
 				1916575F2856D902001ED343 /* ShowOrderViewController.swift in Sources */,
 				191D05D128468DDE00236963 /* CreateOrderPresenter.swift in Sources */,
-				191D05D228468DDE00236963 /* CreateOrderWorker.swift in Sources */,
 				191657412856B076001ED343 /* OrdersWorker.swift in Sources */,
 				1916573E2856ACED001ED343 /* ListOrdersCell.swift in Sources */,
 				1916575D2856D902001ED343 /* ShowOrderRouter.swift in Sources */,
@@ -389,9 +374,7 @@
 				191D05D628468DDE00236963 /* CreateOrderInteractor.swift in Sources */,
 				19E7193428468BBF00F3DA75 /* AppDelegate.swift in Sources */,
 				19E7193628468BBF00F3DA75 /* SceneDelegate.swift in Sources */,
-				1916575C2856D902001ED343 /* ShowOrderWorker.swift in Sources */,
 				1916575E2856D902001ED343 /* ShowOrderModels.swift in Sources */,
-				191A82F62866B374002922A5 /* KeyboardLayoutConstraint.swift in Sources */,
 				1916575B2856D902001ED343 /* ShowOrderPresenter.swift in Sources */,
 				191D05D328468DDE00236963 /* CreateOrderRouter.swift in Sources */,
 			);

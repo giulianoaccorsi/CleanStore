@@ -7,6 +7,10 @@
 
 import Foundation
 class OrdersMemStore: OrdersStoreProtocol {
+    
+    private init(){}
+    
+    static let shared = OrdersMemStore()
 
     static var billingAddress = Address(street1: "1 Infinite Loop", street2: "", city: "Cupertino", state: "CA", zip: "95014")
     static var shipmentAddress = Address(street1: "One Microsoft Way", street2: "", city: "Redmond", state: "WA", zip: "98052-7329")
@@ -23,9 +27,20 @@ class OrdersMemStore: OrdersStoreProtocol {
         completionHandler { return type(of: self).orders }
     }
     
-    func createOrder(orderToCreate: Order, completionHandler: @escaping (Order?) -> Void) {
-        let order = orderToCreate
-        type(of: self).orders.append(order)
+    func createOrder(orderToCreate: Order, completionHandler: @escaping (Order) -> Void) {
+        type(of: self).orders.append(orderToCreate)
+        completionHandler(orderToCreate)
+    }
+    
+    func updateOrder(orderToUpdate: Order, completionHandler: @escaping (Order) -> Void) {
+      if let index = indexOfOrderWithID(id: orderToUpdate.id) {
+        type(of: self).orders[index] = orderToUpdate
+        let order = type(of: self).orders[index]
         completionHandler(order)
+      }
+    }
+    
+    private func indexOfOrderWithID(id: String?) -> Int?{
+      return type(of: self).orders.firstIndex { return $0.id == id }
     }
 }

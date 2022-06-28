@@ -60,11 +60,11 @@ class ListOrdersViewController: UIViewController, ListOrdersDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchOrdersOnLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        fetchOrdersOnLoad()
         if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
                 self.tableView.deselectRow(at: selectionIndexPath, animated: animated)
             }

@@ -14,10 +14,11 @@ protocol CreateOrderDisplayLogic: AnyObject {
     func displayPickerView(viewModel: CreateOrder.PickerView.ViewModel)
     func displayCreatedOrder(viewModel: CreateOrder.SaveOrder.ViewModel)
     func displayEditedOrder(viewModel: CreateOrder.EditOrder.ViewModel)
+    func displayUpdateOrder(viewModel: CreateOrder.EditOrder.ViewModel)
 }
 
 class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
-    
+
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -87,6 +88,7 @@ class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        //TODO: Adicionar no interactor
         if let orderToEdit = orderToEdit {
             let request = CreateOrder.EditOrder.Request(order: orderToEdit)
             interactor?.fillEditOrder(request: request)
@@ -111,9 +113,7 @@ class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
     }
     
     func displayCreatedOrder(viewModel: CreateOrder.SaveOrder.ViewModel) {
-        if viewModel.order != nil {
-//          router?.routeToListOrders(segue: nil)
-        }
+        navigationController?.popViewController(animated: true)
     }
     
     func displayEditedOrder(viewModel: CreateOrder.EditOrder.ViewModel) {
@@ -137,6 +137,10 @@ class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
         myTexts[43] = order.billingAddress.city
         myTexts[44] = order.billingAddress.state
         myTexts[45] = order.billingAddress.zip
+    }
+    
+    func displayUpdateOrder(viewModel: CreateOrder.EditOrder.ViewModel) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func expirationDatePickerValueChanged() {
@@ -178,6 +182,7 @@ extension CreateOrderViewController: ViewConfiguration {
     }
     
     @objc func saveButton() {
+        self.view.endEditing(true)
         
         let firstName = myTexts[0] ?? ""
         let lastName = myTexts[1] ?? ""
@@ -199,8 +204,12 @@ extension CreateOrderViewController: ViewConfiguration {
         let billingState = myTexts[44] ?? ""
         let billingZIP = myTexts[45] ?? ""
         
+        if let orderUpdate = orderToEdit {
+            let request = CreateOrder.EditOrder.Request(order: Order(firstName: firstName, lastName: lastName, phone: phone, email: email, total: NSDecimalNumber(string: total), shipmentAddress: Address(street1: shippingStreet1, street2: shippingStreet2, city: shippingCity, state: shippingState, zip: shippingZIP), shipmentMethod: shippingMethod, billingAddress: Address(street1: billingStreet1, street2: billingStreet2, city: billingCity, state: billingState, zip: billingZIP), paymentMethod: PaymentMethod(creditCardNumber: creditCardNumber, expirationDate: expirationDate, cvv: cvv), id: orderUpdate.id, date: orderUpdate.date))
+            interactor?.editOrder(request: request)
+            return
+        }
         let request = CreateOrder.SaveOrder.Request(order: OrderFormFields(firstName: firstName, lastName: lastName, phone: phone, email: email, billingAddressStreet1: billingStreet1, billingAddressStreet2: billingStreet2, billingAddressCity: billingCity, billingAddressState: billingState, billingAddressZIP: billingZIP, paymentMethodCreditCardNumber: creditCardNumber, paymentMethodCVV: cvv, paymentMethodExpiration: expirationDate, shipmentAddressStreet1: shippingStreet1, shipmentAddressStreet2: shippingStreet2, shipmentAddressCity: shippingCity, shipmentAddressState: shippingState, shipmentAddressZIP: shippingZIP, shipmentMethodSpeed: shippingMethod, total: total))
-        
         interactor?.saveOrderForm(request: request)
     }
 }
@@ -244,6 +253,17 @@ extension CreateOrderViewController: UITableViewDataSource, UITableViewDelegate 
 // MARK: UITextFieldDelegate
 
 extension CreateOrderViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let totalTAG = 4
+        if textField.tag == totalTAG {
+                     if string == "," {
+                         textField.text = textField.text! + "."
+                         return false
+                     }
+               }
+                return true
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let currentIndex = textFieldsTags.firstIndex(of: textField.tag)

@@ -15,7 +15,7 @@ protocol ListOrdersBusinessLogic {
 
 class ListOrdersInteractor: ListOrdersBusinessLogic {
     var presenter: ListOrdersPresentationLogic?
-    var worker = OrdersWorker(ordersStore: OrdersMemStore())
+    var worker = OrdersWorker(ordersStore: OrdersMemStore.shared)
     var orders: [Order] = []
     
     func fetchOrders(request: ListOrders.FetchOrders.Request) {
@@ -28,7 +28,7 @@ class ListOrdersInteractor: ListOrdersBusinessLogic {
     
     func selectedOrder(request: ListOrders.GetOrder.Request) {
         let ordem = orders[request.index]
-        let response = ListOrders.GetOrder.Response(orderID: ordem.id ?? "")
+        let response = ListOrders.GetOrder.Response(orderID: ordem.id)
         self.presenter?.presentGetOrder(response: response)
     }
     
