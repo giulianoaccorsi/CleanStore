@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol ShowOrderPresentationLogic {
+protocol ShowOrderPresenterProtocol {
     func presentOrder(response: ShowOrder.GetOrder.Response)
     func presentOrderToEdit(response: ShowOrder.EditOrder.Response)
 }
 
-class ShowOrderPresenter: ShowOrderPresentationLogic {
+class ShowOrderPresenter: ShowOrderPresenterProtocol {
     
-    weak var viewController: ShowOrderDisplayLogic?
+    weak var viewController: ShowOrderViewControllerProtocol?
     
     let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -28,8 +28,6 @@ class ShowOrderPresenter: ShowOrderPresentationLogic {
         currencyFormatter.numberStyle = .currency
         return currencyFormatter
     }()
-    
-    // MARK: - Get order
     
     func presentOrder(response: ShowOrder.GetOrder.Response) {
         let order = response.order

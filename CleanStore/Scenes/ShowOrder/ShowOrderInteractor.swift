@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol ShowOrderBusinessLogic {
+protocol ShowOrderInteractorProtocol {
     func getOrder(request: ShowOrder.GetOrder.Request)
     func editOrder(request: ShowOrder.EditOrder.Request)
 }
 
-class ShowOrderInteractor: ShowOrderBusinessLogic {
+class ShowOrderInteractor: ShowOrderInteractorProtocol {
     
-    var presenter: ShowOrderPresentationLogic?
+    var presenter: ShowOrderPresenterProtocol?
     var worker = OrdersWorker(ordersStore: OrdersMemStore.shared)
     let id: String
     

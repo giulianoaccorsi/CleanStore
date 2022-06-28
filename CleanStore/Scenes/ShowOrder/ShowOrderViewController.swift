@@ -7,12 +7,12 @@
 
 import UIKit
 
-protocol ShowOrderDisplayLogic: AnyObject {
+protocol ShowOrderViewControllerProtocol: AnyObject {
     func displayOrder(viewModel: ShowOrder.GetOrder.ViewModel)
     func displayOrderToEdit(viewModel: ShowOrder.EditOrder.ViewModel)
 }
 
-class ShowOrderViewController: UIViewController, ShowOrderDisplayLogic {
+class ShowOrderViewController: UIViewController, ShowOrderViewControllerProtocol {
     
     let orderLabel: UILabel = {
         let title = UILabel()
@@ -127,9 +127,9 @@ class ShowOrderViewController: UIViewController, ShowOrderDisplayLogic {
         return stack
     }()
     
-    var interactor: ShowOrderBusinessLogic?
+    var interactor: ShowOrderInteractorProtocol?
     var orderID: String
-    var router: ShowOrderRoutingLogic?
+    var router: ShowOrderRouterProtocol?
     
     init(orderID: String) {
         self.orderID = orderID
@@ -138,21 +138,6 @@ class ShowOrderViewController: UIViewController, ShowOrderDisplayLogic {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: Setup
-    
-    private func setup() {
-        let viewController = self
-        let interactor = ShowOrderInteractor(id: self.orderID)
-        let presenter = ShowOrderPresenter()
-        let router = ShowOrderRouter()
-        viewController.interactor = interactor
-        viewController.router = router
-        interactor.presenter = presenter
-        presenter.viewController = viewController
-        router.viewController = viewController
-        setUpView()
     }
     
     // MARK: View lifecycle
@@ -164,7 +149,7 @@ class ShowOrderViewController: UIViewController, ShowOrderDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        setUpView()
     }
     
     func getOrder() {
@@ -184,8 +169,6 @@ class ShowOrderViewController: UIViewController, ShowOrderDisplayLogic {
     func displayOrderToEdit(viewModel: ShowOrder.EditOrder.ViewModel) {
         self.router?.routeToCreateOrder(order: viewModel.order)
     }
-    
-    
     
     @objc func editButton() {
         interactor?.editOrder(request: ShowOrder.EditOrder.Request())

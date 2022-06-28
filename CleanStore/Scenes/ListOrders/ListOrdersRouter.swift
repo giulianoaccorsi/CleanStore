@@ -8,22 +8,22 @@
 
 import UIKit
 
-protocol ListOrdersRoutingLogic {
+protocol ListOrdersRouterProtocol {
     func routeToCreateOrder()
     func routeToShowOrder(orderID: String)
 }
 
-class ListOrdersRouter: ListOrdersRoutingLogic {
+class ListOrdersRouter: ListOrdersRouterProtocol {
     
     weak var viewController: ListOrdersViewController?
     
     func routeToCreateOrder() {
-        let viewController = CreateOrderViewController()
+        let viewController = CreateOrderFactory.make()
         self.viewController?.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func routeToShowOrder(orderID: String) {
-        let viewController = ShowOrderViewController(orderID: orderID)
+        let viewController = ShowOrderFactory.make(orderID: orderID)
         self.viewController?.navigationController?.pushViewController(viewController, animated: true)
     }
     

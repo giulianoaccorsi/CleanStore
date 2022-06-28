@@ -27,7 +27,7 @@ enum ListOrders {
         }
     }
     
-    enum GetOrder {
+    enum SelectedOrder {
         struct Request {
             let index: Int
         }

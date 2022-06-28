@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol ShowOrderRoutingLogic {
+protocol ShowOrderRouterProtocol {
     func routeToCreateOrder(order: Order)
 }
 
-class ShowOrderRouter: ShowOrderRoutingLogic {
+class ShowOrderRouter: ShowOrderRouterProtocol {
     
     weak var viewController: ShowOrderViewController?
     

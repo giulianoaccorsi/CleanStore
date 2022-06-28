@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol ListOrdersDisplayLogic: AnyObject {
+protocol ListOrdersViewControllerProtocol: AnyObject {
     func displayFetchedOrders(viewModel: ListOrders.FetchOrders.ViewModel)
-    func displayGetOrder(viewModel: ListOrders.GetOrder.ViewModel)
+    func displaySelectedOrder(viewModel: ListOrders.SelectedOrder.ViewModel)
     func displayAddOrder(viewModel: ListOrders.AddOrder.ViewModel)
 }
 
-class ListOrdersViewController: UIViewController, ListOrdersDisplayLogic {
-
+class ListOrdersViewController: UIViewController, ListOrdersViewControllerProtocol {
+    
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,49 +25,23 @@ class ListOrdersViewController: UIViewController, ListOrdersDisplayLogic {
         return tableView
     }()
     
-    var interactor: ListOrdersBusinessLogic?
-    var router: ListOrdersRoutingLogic?
+    var interactor: ListOrdersInteractorProtocol?
+    var router: ListOrdersRouterProtocol?
     var displayedOrders: [ListOrders.FetchOrders.ViewModel.DisplayedOrder] = []
-    
-    // MARK: Object lifecycle
-    
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    // MARK: Setup
-    
-    private func setup() {
-        let viewController = self
-        let interactor = ListOrdersInteractor()
-        let presenter = ListOrdersPresenter()
-        let router = ListOrdersRouter()
-        viewController.interactor = interactor
-        viewController.router = router
-        interactor.presenter = presenter
-        presenter.viewController = viewController
-        router.viewController = viewController
-        setUpView()
-    }
     
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchOrdersOnLoad()
         if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
-                self.tableView.deselectRow(at: selectionIndexPath, animated: animated)
-            }
+            self.tableView.deselectRow(at: selectionIndexPath, animated: animated)
+        }
     }
     
     func fetchOrdersOnLoad() {
@@ -80,7 +54,7 @@ class ListOrdersViewController: UIViewController, ListOrdersDisplayLogic {
         tableView.reloadData()
     }
     
-    func displayGetOrder(viewModel: ListOrders.GetOrder.ViewModel) {
+    func displaySelectedOrder(viewModel: ListOrders.SelectedOrder.ViewModel) {
         router?.routeToShowOrder(orderID: viewModel.orderID)
     }
     
@@ -131,8 +105,8 @@ extension ListOrdersViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let request = ListOrders.GetOrder.Request(index: indexPath.row)
+        let request = ListOrders.SelectedOrder.Request(index: indexPath.row)
         interactor?.selectedOrder(request: request)
     }
-
+    
 }

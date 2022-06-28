@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol ListOrdersBusinessLogic {
+protocol ListOrdersInteractorProtocol {
     func fetchOrders(request: ListOrders.FetchOrders.Request)
-    func selectedOrder(request: ListOrders.GetOrder.Request)
+    func selectedOrder(request: ListOrders.SelectedOrder.Request)
     func addNewOrder(request: ListOrders.AddOrder.Request)
 }
 
-class ListOrdersInteractor: ListOrdersBusinessLogic {
-    var presenter: ListOrdersPresentationLogic?
+class ListOrdersInteractor: ListOrdersInteractorProtocol {
+    var presenter: ListOrdersPresenterProtocol?
     var worker = OrdersWorker(ordersStore: OrdersMemStore.shared)
     var orders: [Order] = []
     
@@ -26,10 +26,10 @@ class ListOrdersInteractor: ListOrdersBusinessLogic {
         }
     }
     
-    func selectedOrder(request: ListOrders.GetOrder.Request) {
+    func selectedOrder(request: ListOrders.SelectedOrder.Request) {
         let ordem = orders[request.index]
-        let response = ListOrders.GetOrder.Response(orderID: ordem.id)
-        self.presenter?.presentGetOrder(response: response)
+        let response = ListOrders.SelectedOrder.Response(orderID: ordem.id)
+        self.presenter?.presentSelectedOrder(response: response)
     }
     
     func addNewOrder(request: ListOrders.AddOrder.Request) {

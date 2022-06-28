@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol ListOrdersPresentationLogic {
+protocol ListOrdersPresenterProtocol {
     func presentFetchedOrders(response: ListOrders.FetchOrders.Response)
-    func presentGetOrder(response: ListOrders.GetOrder.Response)
+    func presentSelectedOrder(response: ListOrders.SelectedOrder.Response)
     func presentAddOrder(response: ListOrders.AddOrder.Response)
 }
 
-class ListOrdersPresenter: ListOrdersPresentationLogic {
-    weak var viewController: ListOrdersDisplayLogic?
+class ListOrdersPresenter: ListOrdersPresenterProtocol {
+    weak var viewController: ListOrdersViewControllerProtocol?
     let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
@@ -40,9 +40,9 @@ class ListOrdersPresenter: ListOrdersPresentationLogic {
         viewController?.displayFetchedOrders(viewModel: viewModel)
     }
     
-    func presentGetOrder(response: ListOrders.GetOrder.Response) {
-        let viewModel = ListOrders.GetOrder.ViewModel(orderID: response.orderID)
-        viewController?.displayGetOrder(viewModel: viewModel)
+    func presentSelectedOrder(response: ListOrders.SelectedOrder.Response) {
+        let viewModel = ListOrders.SelectedOrder.ViewModel(orderID: response.orderID)
+        viewController?.displaySelectedOrder(viewModel: viewModel)
         
     }
     

@@ -18,7 +18,7 @@ protocol CreateOrderInteractorProtocol {
 }
 
 class CreateOrderInteractor: CreateOrderInteractorProtocol {
- 
+    
     var presenter: CreateOrderPresenterProtocol?
     var ordersWorker = OrdersWorker(ordersStore: OrdersMemStore.shared)
     

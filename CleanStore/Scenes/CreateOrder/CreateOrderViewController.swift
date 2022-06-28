@@ -68,26 +68,11 @@ class CreateOrderViewController: UIViewController, CreateOrderViewControllerProt
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: Setup
-    
-    private func setup() {
-        let viewController = self
-        let interactor = CreateOrderInteractor()
-        let presenter = CreateOrderPresenter()
-        let router = CreateOrderRouter()
-        viewController.interactor = interactor
-        viewController.router = router
-        interactor.presenter = presenter
-        presenter.viewController = viewController
-        router.viewController = viewController
-        setUpView()
-    }
-    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        setUpView()
         //TODO: Adicionar no interactor
         if let orderToEdit = orderToEdit {
             let request = CreateOrder.EditOrder.Request(order: orderToEdit)
