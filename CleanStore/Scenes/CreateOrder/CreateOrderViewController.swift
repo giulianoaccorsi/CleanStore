@@ -44,7 +44,7 @@ class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
     }()
     
     
-    var interactor: CreateOrderBusinessLogic?
+    var interactor: CreateOrderInteractorProtocol?
     var router: CreateOrderRoutingLogic?
     var textFieldsTags: [Int] = []
     var myTexts = [Int: String]()
@@ -91,10 +91,10 @@ class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
         //TODO: Adicionar no interactor
         if let orderToEdit = orderToEdit {
             let request = CreateOrder.EditOrder.Request(order: orderToEdit)
-            interactor?.fillEditOrder(request: request)
+            interactor?.loadOrderToEdit(request: request)
         }
-        interactor?.fillTableView(request: CreateOrder.TableView.Request())
-        interactor?.fillPickerView(request: CreateOrder.PickerView.Request())
+        interactor?.loadTableView(request: CreateOrder.TableView.Request())
+        interactor?.loadPickerView(request: CreateOrder.PickerView.Request())
     }
     
     func displayExpirationDate(viewModel: CreateOrder.FormatExpirationDate.ViewModel) {
@@ -206,11 +206,11 @@ extension CreateOrderViewController: ViewConfiguration {
         
         if let orderUpdate = orderToEdit {
             let request = CreateOrder.EditOrder.Request(order: Order(firstName: firstName, lastName: lastName, phone: phone, email: email, total: NSDecimalNumber(string: total), shipmentAddress: Address(street1: shippingStreet1, street2: shippingStreet2, city: shippingCity, state: shippingState, zip: shippingZIP), shipmentMethod: shippingMethod, billingAddress: Address(street1: billingStreet1, street2: billingStreet2, city: billingCity, state: billingState, zip: billingZIP), paymentMethod: PaymentMethod(creditCardNumber: creditCardNumber, expirationDate: expirationDate, cvv: cvv), id: orderUpdate.id, date: orderUpdate.date))
-            interactor?.editOrder(request: request)
+            interactor?.updateOrder(request: request)
             return
         }
         let request = CreateOrder.SaveOrder.Request(order: OrderFormFields(firstName: firstName, lastName: lastName, phone: phone, email: email, billingAddressStreet1: billingStreet1, billingAddressStreet2: billingStreet2, billingAddressCity: billingCity, billingAddressState: billingState, billingAddressZIP: billingZIP, paymentMethodCreditCardNumber: creditCardNumber, paymentMethodCVV: cvv, paymentMethodExpiration: expirationDate, shipmentAddressStreet1: shippingStreet1, shipmentAddressStreet2: shippingStreet2, shipmentAddressCity: shippingCity, shipmentAddressState: shippingState, shipmentAddressZIP: shippingZIP, shipmentMethodSpeed: shippingMethod, total: total))
-        interactor?.saveOrderForm(request: request)
+        interactor?.saveOrder(request: request)
     }
 }
 

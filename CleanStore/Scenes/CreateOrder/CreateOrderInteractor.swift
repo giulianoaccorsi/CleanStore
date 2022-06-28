@@ -8,16 +8,16 @@
 
 import UIKit
 
-protocol CreateOrderBusinessLogic {
+protocol CreateOrderInteractorProtocol {
     func formatExpirationDate(request: CreateOrder.FormatExpirationDate.Request)
-    func fillTableView(request: CreateOrder.TableView.Request)
-    func fillPickerView(request: CreateOrder.PickerView.Request)
-    func saveOrderForm(request: CreateOrder.SaveOrder.Request)
-    func fillEditOrder(request: CreateOrder.EditOrder.Request)
-    func editOrder(request: CreateOrder.EditOrder.Request)
+    func loadTableView(request: CreateOrder.TableView.Request)
+    func loadPickerView(request: CreateOrder.PickerView.Request)
+    func saveOrder(request: CreateOrder.SaveOrder.Request)
+    func loadOrderToEdit(request: CreateOrder.EditOrder.Request)
+    func updateOrder(request: CreateOrder.EditOrder.Request)
 }
 
-class CreateOrderInteractor: CreateOrderBusinessLogic {
+class CreateOrderInteractor: CreateOrderInteractorProtocol {
  
     var presenter: CreateOrderPresentationLogic?
     var ordersWorker = OrdersWorker(ordersStore: OrdersMemStore.shared)
@@ -50,13 +50,18 @@ class CreateOrderInteractor: CreateOrderBusinessLogic {
                                         FormSection.Field(text: "State", keyboardType: .normal, type: .textFieldSection),
                                         FormSection.Field(text: "ZIP", keyboardType: .numberPad, type: .textFieldSection)])]
     
-    func fillTableView(request: CreateOrder.TableView.Request) {
+    func loadTableView(request: CreateOrder.TableView.Request) {
         let response = CreateOrder.TableView.Response(formSection: formSection)
         presenter?.presentTableView(response: response)
         
     }
     
-    func saveOrderForm(request: CreateOrder.SaveOrder.Request) {
+    func loadPickerView(request: CreateOrder.PickerView.Request) {
+        let response = CreateOrder.PickerView.Response(shippingMethods: shippingMethods)
+        presenter?.presentPickerView(reponse: response)
+    }
+    
+    func saveOrder(request: CreateOrder.SaveOrder.Request) {
         let orderToCreate = buildOrderFromOrderFormFields(request.order)
         ordersWorker.createOrder(orderToCreate: orderToCreate) { order in
             let response = CreateOrder.SaveOrder.Response(order: order)
@@ -64,7 +69,12 @@ class CreateOrderInteractor: CreateOrderBusinessLogic {
         }
     }
     
-    func editOrder(request: CreateOrder.EditOrder.Request) {
+    func loadOrderToEdit(request: CreateOrder.EditOrder.Request) {
+        let response = CreateOrder.EditOrder.Response(order: request.order)
+        presenter?.presentEditedOrder(reponse: response)
+    }
+    
+    func updateOrder(request: CreateOrder.EditOrder.Request) {
         let orderToUpdate = request.order
         ordersWorker.updateOrder(orderToUpdate: orderToUpdate) { order in
             let response = CreateOrder.EditOrder.Response(order: order)
@@ -76,16 +86,6 @@ class CreateOrderInteractor: CreateOrderBusinessLogic {
     func formatExpirationDate(request: CreateOrder.FormatExpirationDate.Request) {
         let response = CreateOrder.FormatExpirationDate.Response(date: request.date)
         presenter?.presentExpirationDate(response: response)
-    }
-    
-    func fillPickerView(request: CreateOrder.PickerView.Request) {
-        let response = CreateOrder.PickerView.Response(shippingMethods: shippingMethods)
-        presenter?.presentPickerView(reponse: response)
-    }
-    
-    func fillEditOrder(request: CreateOrder.EditOrder.Request) {
-        let response = CreateOrder.EditOrder.Response(order: request.order)
-        presenter?.presentEditedOrder(reponse: response)
     }
     
     private func buildOrderFromOrderFormFields(_ orderFormFields: OrderFormFields) -> Order {
