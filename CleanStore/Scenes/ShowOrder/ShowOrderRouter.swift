@@ -17,7 +17,7 @@ class ShowOrderRouter: ShowOrderRouterProtocol {
     weak var viewController: ShowOrderViewController?
     
     func routeToCreateOrder(order: Order) {
-        let viewController = CreateOrderViewController(orderToEdit: order)
+        let viewController = CreateOrderFactory.make(order: order)
         self.viewController?.navigationController?.pushViewController(viewController, animated: true)
     }
     

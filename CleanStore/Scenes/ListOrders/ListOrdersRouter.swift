@@ -18,7 +18,7 @@ class ListOrdersRouter: ListOrdersRouterProtocol {
     weak var viewController: ListOrdersViewController?
     
     func routeToCreateOrder() {
-        let viewController = CreateOrderFactory.make()
+        let viewController = CreateOrderFactory.make(order: nil)
         self.viewController?.navigationController?.pushViewController(viewController, animated: true)
     }
     
