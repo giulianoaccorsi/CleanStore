@@ -12,7 +12,7 @@
 
 import UIKit
 
-protocol CreateOrderPresentationLogic {
+protocol CreateOrderPresenterProtocol {
     func presentExpirationDate(response: CreateOrder.FormatExpirationDate.Response)
     func presentTableView(response: CreateOrder.TableView.Response)
     func presentPickerView(reponse: CreateOrder.PickerView.Response)
@@ -22,9 +22,9 @@ protocol CreateOrderPresentationLogic {
     
 }
 
-class CreateOrderPresenter: CreateOrderPresentationLogic {
+class CreateOrderPresenter: CreateOrderPresenterProtocol {
 
-    weak var viewController: CreateOrderDisplayLogic?
+    weak var viewController: CreateOrderViewControllerProtocol?
     
     let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -56,7 +56,7 @@ class CreateOrderPresenter: CreateOrderPresentationLogic {
     
     func presentEditedOrder(reponse: CreateOrder.EditOrder.Response) {
         let viewModel = CreateOrder.EditOrder.ViewModel(order: reponse.order)
-        viewController?.displayEditedOrder(viewModel: viewModel)
+        viewController?.displayOrderToEdit(viewModel: viewModel)
     }
     func presentUpdateOrder(reponse: CreateOrder.EditOrder.Response) {
         let viewModel = CreateOrder.EditOrder.ViewModel(order: reponse.order)

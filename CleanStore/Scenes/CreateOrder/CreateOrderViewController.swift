@@ -8,16 +8,16 @@
 
 import UIKit
 
-protocol CreateOrderDisplayLogic: AnyObject {
+protocol CreateOrderViewControllerProtocol: AnyObject {
     func displayExpirationDate(viewModel: CreateOrder.FormatExpirationDate.ViewModel)
     func displayTableView(viewModel: CreateOrder.TableView.ViewModel)
     func displayPickerView(viewModel: CreateOrder.PickerView.ViewModel)
     func displayCreatedOrder(viewModel: CreateOrder.SaveOrder.ViewModel)
-    func displayEditedOrder(viewModel: CreateOrder.EditOrder.ViewModel)
+    func displayOrderToEdit(viewModel: CreateOrder.EditOrder.ViewModel)
     func displayUpdateOrder(viewModel: CreateOrder.EditOrder.ViewModel)
 }
 
-class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
+class CreateOrderViewController: UIViewController, CreateOrderViewControllerProtocol {
 
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -116,7 +116,7 @@ class CreateOrderViewController: UIViewController, CreateOrderDisplayLogic {
         navigationController?.popViewController(animated: true)
     }
     
-    func displayEditedOrder(viewModel: CreateOrder.EditOrder.ViewModel) {
+    func displayOrderToEdit(viewModel: CreateOrder.EditOrder.ViewModel) {
         let order = viewModel.order
         myTexts[0] = order.firstName
         myTexts[1] = order.lastName

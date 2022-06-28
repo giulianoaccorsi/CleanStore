@@ -19,7 +19,7 @@ protocol CreateOrderInteractorProtocol {
 
 class CreateOrderInteractor: CreateOrderInteractorProtocol {
  
-    var presenter: CreateOrderPresentationLogic?
+    var presenter: CreateOrderPresenterProtocol?
     var ordersWorker = OrdersWorker(ordersStore: OrdersMemStore.shared)
     
     var shippingMethods = ["Standard Shipping", "One-Day Shipping", "Two-Day Shipping"]
