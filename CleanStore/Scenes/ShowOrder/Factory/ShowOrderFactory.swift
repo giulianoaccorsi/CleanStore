@@ -8,9 +8,9 @@
 import Foundation
 
 enum ShowOrderFactory {
-    static func make(orderID: String) -> ShowOrderViewController {
-        let viewController = ShowOrderViewController(orderID: orderID)
-        let interactor = ShowOrderInteractor(id: orderID)
+    static func make() -> ShowOrderViewController {
+        let viewController = ShowOrderViewController()
+        let interactor = ShowOrderInteractor()
         let presenter = ShowOrderPresenter()
         let router = ShowOrderRouter()
         viewController.interactor = interactor
@@ -18,6 +18,7 @@ enum ShowOrderFactory {
         interactor.presenter = presenter
         presenter.viewController = viewController
         router.viewController = viewController
+        router.dataStore = interactor
 
         return viewController
     }

@@ -13,10 +13,14 @@ protocol ListOrdersInteractorProtocol {
     func addNewOrder(request: ListOrders.AddOrder.Request)
 }
 
-class ListOrdersInteractor: ListOrdersInteractorProtocol {
+protocol ListOrdersDataStore{
+    var orders: [Order]? {get}
+}
+
+class ListOrdersInteractor: ListOrdersInteractorProtocol, ListOrdersDataStore {
+    var orders: [Order]?
     var presenter: ListOrdersPresenterProtocol?
     var worker = OrdersWorker(ordersStore: OrdersMemStore.shared)
-    var orders: [Order] = []
     
     func fetchOrders(request: ListOrders.FetchOrders.Request) {
         worker.fetchOrders { orders in
@@ -27,9 +31,11 @@ class ListOrdersInteractor: ListOrdersInteractorProtocol {
     }
     
     func selectedOrder(request: ListOrders.SelectedOrder.Request) {
-        let ordem = orders[request.index]
-        let response = ListOrders.SelectedOrder.Response(orderID: ordem.id)
-        self.presenter?.presentSelectedOrder(response: response)
+        if let orders = self.orders {
+            let ordem = orders[request.index]
+            let response = ListOrders.SelectedOrder.Response(orderID: ordem.id)
+            self.presenter?.presentSelectedOrder(response: response)
+        }
     }
     
     func addNewOrder(request: ListOrders.AddOrder.Request) {

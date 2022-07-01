@@ -8,13 +8,19 @@
 
 import UIKit
 
-@objc protocol CreateOrderRouterProtocol {
+protocol CreateOrderRouterProtocol {
     func routeToListOrdersViewController()
     func routeToShowOrderViewController()
     
 }
 
-class CreateOrderRouter: CreateOrderRouterProtocol {
+protocol CreateOrderDataPassing {
+    var dataStore: CreateOrderDataStore? { get }
+}
+
+class CreateOrderRouter: CreateOrderRouterProtocol, CreateOrderDataPassing {
+    var dataStore: CreateOrderDataStore?
+    
     weak var viewController: CreateOrderViewController?
     
     func routeToListOrdersViewController() {

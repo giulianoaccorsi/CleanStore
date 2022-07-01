@@ -128,17 +128,7 @@ class ShowOrderViewController: UIViewController, ShowOrderViewControllerProtocol
     }()
     
     var interactor: ShowOrderInteractorProtocol?
-    var orderID: String
-    var router: ShowOrderRouterProtocol?
-    
-    init(orderID: String) {
-        self.orderID = orderID
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var router: (ShowOrderRouterProtocol & ShowOrderDataPassing)?
     
     // MARK: View lifecycle
     
@@ -167,7 +157,7 @@ class ShowOrderViewController: UIViewController, ShowOrderViewControllerProtocol
     }
     
     func displayOrderToEdit(viewModel: ShowOrder.EditOrder.ViewModel) {
-        self.router?.routeToCreateOrder(order: viewModel.order)
+        self.router?.routeToCreateOrder()
     }
     
     @objc func editButton() {

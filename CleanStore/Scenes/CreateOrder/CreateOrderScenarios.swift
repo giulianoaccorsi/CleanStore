@@ -27,9 +27,7 @@ enum CreateOrder {
     }
     
     enum EditOrder {
-        struct Request {
-            var order: Order
-        }
+        struct Request {}
         struct Response {
             var order: Order
         }

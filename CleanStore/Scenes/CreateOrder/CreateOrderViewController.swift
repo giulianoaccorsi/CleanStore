@@ -45,39 +45,19 @@ class CreateOrderViewController: UIViewController, CreateOrderViewControllerProt
     
     
     var interactor: CreateOrderInteractorProtocol?
-    var router: CreateOrderRouterProtocol?
+    var router: (CreateOrderRouterProtocol & CreateOrderDataPassing)?
     var textFieldsTags: [Int] = []
     var myTexts = [Int: String]()
     var dateFromPresenter: String?
     var formSection: [FormSection] = []
     var shippingMethods: [String] = []
-    var orderToEdit: Order?
-    
-    // MARK: Object lifecycle
-    
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    init(orderToEdit: Order) {
-        self.orderToEdit = orderToEdit
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
-        //TODO: Adicionar no interactor
-        if let orderToEdit = orderToEdit {
-            let request = CreateOrder.EditOrder.Request(order: orderToEdit)
-            interactor?.loadOrderToEdit(request: request)
-        }
+        showOrderToEdit()
         interactor?.loadTableView(request: CreateOrder.TableView.Request())
         interactor?.loadPickerView(request: CreateOrder.PickerView.Request())
     }
@@ -126,6 +106,11 @@ class CreateOrderViewController: UIViewController, CreateOrderViewControllerProt
     
     func displayUpdateOrder(viewModel: CreateOrder.EditOrder.ViewModel) {
         router?.routeToShowOrderViewController()
+    }
+    
+    func showOrderToEdit() {
+        let request = CreateOrder.EditOrder.Request()
+        interactor?.loadOrderToEdit(request: request)
     }
     
     @objc func expirationDatePickerValueChanged() {
@@ -189,7 +174,7 @@ extension CreateOrderViewController: ViewConfiguration {
         let billingState = myTexts[44] ?? ""
         let billingZIP = myTexts[45] ?? ""
         
-        if let orderUpdate = orderToEdit {
+        if let orderUpdate = interactor?.orderToEdit {
             let request = CreateOrder.UpdateOrder.Request(order: OrderFormFields(firstName: firstName, lastName: lastName, phone: phone, email: email, billingAddressStreet1: billingStreet1, billingAddressStreet2: billingStreet2, billingAddressCity: billingCity, billingAddressState: billingState, billingAddressZIP: billingZIP, paymentMethodCreditCardNumber: creditCardNumber, paymentMethodCVV: cvv, paymentMethodExpiration: expirationDate, shipmentAddressStreet1: shippingStreet1, shipmentAddressStreet2: shippingStreet2, shipmentAddressCity: shippingCity, shipmentAddressState: shippingState, shipmentAddressZIP: shippingZIP, shipmentMethodSpeed: shippingMethod, total: total), id: orderUpdate.id, date: orderUpdate.date)
             interactor?.updateOrder(request: request)
             return

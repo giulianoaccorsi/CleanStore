@@ -9,6 +9,7 @@
 import UIKit
 
 protocol CreateOrderInteractorProtocol {
+    var orderToEdit: Order? { get }
     func formatExpirationDate(request: CreateOrder.FormatExpirationDate.Request)
     func loadTableView(request: CreateOrder.TableView.Request)
     func loadPickerView(request: CreateOrder.PickerView.Request)
@@ -17,8 +18,13 @@ protocol CreateOrderInteractorProtocol {
     func updateOrder(request: CreateOrder.UpdateOrder.Request)
 }
 
-class CreateOrderInteractor: CreateOrderInteractorProtocol {
+protocol CreateOrderDataStore {
+    var orderToEdit: Order? {get set}
+}
+
+class CreateOrderInteractor: CreateOrderInteractorProtocol, CreateOrderDataStore {
     
+    var orderToEdit: Order?
     var presenter: CreateOrderPresenterProtocol?
     var ordersWorker = OrdersWorker(ordersStore: OrdersMemStore.shared)
     
@@ -70,8 +76,10 @@ class CreateOrderInteractor: CreateOrderInteractorProtocol {
     }
     
     func loadOrderToEdit(request: CreateOrder.EditOrder.Request) {
-        let response = CreateOrder.EditOrder.Response(order: request.order)
-        presenter?.presentEditedOrder(reponse: response)
+        if let orderToEdit = orderToEdit {
+            let response = CreateOrder.EditOrder.Response(order: orderToEdit)
+            presenter?.presentEditedOrder(reponse: response)
+        }
     }
     
     func updateOrder(request: CreateOrder.UpdateOrder.Request) {

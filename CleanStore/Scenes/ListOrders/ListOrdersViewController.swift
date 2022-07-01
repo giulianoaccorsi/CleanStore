@@ -26,7 +26,7 @@ class ListOrdersViewController: UIViewController, ListOrdersViewControllerProtoc
     }()
     
     var interactor: ListOrdersInteractorProtocol?
-    var router: ListOrdersRouterProtocol?
+    var router: (ListOrdersRouterProtocol & ListOrderDataPassing)?
     var displayedOrders: [ListOrders.FetchOrders.ViewModel.DisplayedOrder] = []
     
     // MARK: View lifecycle
@@ -55,7 +55,7 @@ class ListOrdersViewController: UIViewController, ListOrdersViewControllerProtoc
     }
     
     func displaySelectedOrder(viewModel: ListOrders.SelectedOrder.ViewModel) {
-        router?.routeToShowOrder(orderID: viewModel.orderID)
+        router?.routeToShowOrder()
     }
     
     func displayAddOrder(viewModel: ListOrders.AddOrder.ViewModel) {

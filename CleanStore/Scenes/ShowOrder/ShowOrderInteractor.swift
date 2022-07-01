@@ -12,18 +12,17 @@ protocol ShowOrderInteractorProtocol {
     func editOrder(request: ShowOrder.EditOrder.Request)
 }
 
-class ShowOrderInteractor: ShowOrderInteractorProtocol {
-    
+protocol ShowOrderDataStore {
+    var order: Order! {get set}
+}
+
+class ShowOrderInteractor: ShowOrderInteractorProtocol, ShowOrderDataStore {
+    var order: Order!
     var presenter: ShowOrderPresenterProtocol?
     var worker = OrdersWorker(ordersStore: OrdersMemStore.shared)
-    let id: String
-    
-    init(id: String) {
-        self.id = id
-    }
     
     func getOrder(request: ShowOrder.GetOrder.Request) {
-        worker.fetchOrder(id: id) { order in
+        worker.fetchOrder(id: order.id) { order in
             guard let orderFetched = order else {return}
             let response = ShowOrder.GetOrder.Response(order: orderFetched)
             self.presenter?.presentOrder(response: response)
@@ -31,7 +30,7 @@ class ShowOrderInteractor: ShowOrderInteractorProtocol {
     }
     
     func editOrder(request: ShowOrder.EditOrder.Request) {
-        worker.fetchOrder(id: id) { order in
+        worker.fetchOrder(id: order.id) { order in
             guard let orderFetched = order else {return}
             let response = ShowOrder.EditOrder.Response(order: orderFetched)
             self.presenter?.presentOrderToEdit(response: response)

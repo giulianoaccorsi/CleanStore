@@ -10,21 +10,52 @@ import UIKit
 
 protocol ListOrdersRouterProtocol {
     func routeToCreateOrder()
-    func routeToShowOrder(orderID: String)
+    func routeToShowOrder()
 }
 
-class ListOrdersRouter: ListOrdersRouterProtocol {
+protocol ListOrderDataPassing {
+    var dataStore: ListOrdersDataStore? {get}
+}
+
+class ListOrdersRouter: ListOrdersRouterProtocol, ListOrderDataPassing{
+    var dataStore: ListOrdersDataStore?
     
     weak var viewController: ListOrdersViewController?
     
     func routeToCreateOrder() {
-        let viewController = CreateOrderFactory.make(order: nil)
-        self.viewController?.navigationController?.pushViewController(viewController, animated: true)
+        let viewControllerDestination = CreateOrderFactory.make()
+        var dataStoreDestination = viewControllerDestination.router?.dataStore
+        passDataToCreateOrder(source: dataStore, destination: &dataStoreDestination)
+        navigateToCreateOrder(source: viewController!, destination: viewControllerDestination)
     }
     
-    func routeToShowOrder(orderID: String) {
-        let viewController = ShowOrderFactory.make(orderID: orderID)
-        self.viewController?.navigationController?.pushViewController(viewController, animated: true)
+    func routeToShowOrder() {
+        let viewControllerDestination = ShowOrderFactory.make()
+        var dataStoreDestination = viewControllerDestination.router?.dataStore
+        passDataToShowOrder(source: dataStore, destination: &dataStoreDestination)
+        navigateToShowOrder(source: viewController, destination: viewControllerDestination)
+    }
+    
+    // MARK: Navigation
+    
+    func navigateToCreateOrder(source: ListOrdersViewController?, destination: CreateOrderViewController?) {
+        guard let destination = destination else {return}
+        source?.show(destination, sender: nil)
+    }
+    
+    func navigateToShowOrder(source: ListOrdersViewController?, destination: ShowOrderViewController?) {
+        guard let destination = destination else {return}
+        source?.show(destination, sender: nil)
+    }
+    
+    // MARK: Passing data
+    
+    func passDataToCreateOrder(source: ListOrdersDataStore?, destination: inout CreateOrderDataStore?) {
+    }
+    
+    func passDataToShowOrder(source: ListOrdersDataStore?, destination: inout ShowOrderDataStore?) {
+        let selectedRow = viewController?.tableView.indexPathForSelectedRow?.row
+        destination?.order = source?.orders?[selectedRow!]
     }
     
 }

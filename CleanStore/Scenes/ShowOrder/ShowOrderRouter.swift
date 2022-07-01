@@ -9,16 +9,34 @@
 import UIKit
 
 protocol ShowOrderRouterProtocol {
-    func routeToCreateOrder(order: Order)
+    func routeToCreateOrder()
 }
 
-class ShowOrderRouter: ShowOrderRouterProtocol {
+protocol ShowOrderDataPassing {
+    var dataStore: ShowOrderDataStore? {get}
+}
+
+class ShowOrderRouter: ShowOrderRouterProtocol, ShowOrderDataPassing {
     
+    var dataStore: ShowOrderDataStore?
     weak var viewController: ShowOrderViewController?
     
-    func routeToCreateOrder(order: Order) {
-        let viewController = CreateOrderFactory.make(order: order)
-        self.viewController?.navigationController?.pushViewController(viewController, animated: true)
+    func routeToCreateOrder() {
+        let viewControllerDestination = CreateOrderFactory.make()
+        var dataStoreDestination = viewControllerDestination.router?.dataStore
+        passDataToCreateOrder(source: dataStore, destination: &dataStoreDestination)
+        navigateToCreateOrder(source: viewController, destination: viewControllerDestination)
+    }
+    
+    func navigateToCreateOrder(source: ShowOrderViewController?, destination: CreateOrderViewController?) {
+        guard let destination = destination else {return}
+        source?.show(destination, sender: nil)
+    }
+    
+    func passDataToCreateOrder(source: ShowOrderDataStore?, destination: inout CreateOrderDataStore?) {
+        guard var destination = destination else {return}
+        destination.orderToEdit = source?.order
     }
     
 }
+
